@@ -1,4 +1,15 @@
-# OWASP LLM Top 10 RAG Pipeline
+# LLM Red Team Evaluation Platform
+
+LLM Red Team Cybersecurity Evaluation Platform
+An open-source platform for evaluating LLM security using OWASP LLM Top 10 standards. Designed for enterprise use, CI/CD integration, and security auditing.
+
+Features
+OWASP-Centric: All evaluations map to OWASP LLM Top 10 risks
+Multi-Provider Support: Test OpenAI, Anthropic, and open-source models
+Adversarial Testing: Automatic generation of prompt injections, jailbreaks, and other attack vectors
+Comprehensive Evaluation: Rule-based + LLM-as-judge evaluation
+OWASP-Mapped Reports: Explainable security reports with risk-specific recommendations
+CI/CD Ready: Designed for continuous security testing
 
 A Retrieval-Augmented Generation (RAG) pipeline for the OWASP LLM Top 10 – 2025 document. This system chunks the document by LLM0X sections, extracts metadata, and integrates with prompt generation and LLM-as-judge evaluation.
 
@@ -226,3 +237,4 @@ Categories are automatically assigned based on risk IDs:
 ## License
 
 This project is for use with the OWASP LLM Top 10 – 2025 document.
+
