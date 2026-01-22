@@ -25,20 +25,7 @@ A Retrieval-Augmented Generation (RAG) pipeline for the OWASP LLM Top 10 – 202
 - **Prompt Generation**: Generates context-aware prompts with RAG chunks and metadata
 - **LLM-as-Judge Evaluation**: Evaluates responses against the reference document with metadata awareness
 
-## Project Structure
 
-```
-.
-├── data/
-│   └── # OWASP LLM Top 10 – 2025.md    # Source document
-├── rag_chunker.py                       # Document chunker by LLM0X sections
-├── rag_pipeline.py                      # RAG pipeline with vector store
-├── prompt_generator.py                  # Prompt generator with RAG context
-├── llm_judge.py                         # LLM-as-judge evaluator
-├── example_usage.py                     # Example usage script
-├── requirements.txt                     # Python dependencies
-└── README.md                            # This file
-```
 
 ## Installation
 
@@ -237,4 +224,5 @@ Categories are automatically assigned based on risk IDs:
 ## License
 
 This project is for use with the OWASP LLM Top 10 – 2025 document.
+
 
