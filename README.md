@@ -1,3 +1,234 @@
+# LLM Red Team Cybersecurity Evaluation Platform
+
+An open-source platform for **systematic security evaluation of Large Language Models (LLMs)** using the **OWASP LLM Top 10 (2025)** as the authoritative standard.
+
+Designed for **enterprise adoption**, **CI/CD integration**, and **security auditing**.
+
+---
+
+## Why This Exists
+
+LLMs are increasingly deployed in **production systems, workflows, and decision paths**, yet most evaluations focus on accuracy and performance—not adversarial security behavior.
+
+This platform treats LLMs as **security-critical components** and evaluates them accordingly.
+
+---
+
+## Key Features
+
+### OWASP-Centric by Design
+
+* Every test, finding, and report maps directly to **OWASP LLM Top 10 risks**
+* Enables auditability, compliance alignment, and standardized reporting
+
+### Model-Agnostic Testing
+
+* Supports **OpenAI**, **Anthropic**, and **open-source models**
+* Clean adapter abstraction for extensibility
+
+### Automated Adversarial Testing
+
+* Automatic generation of:
+
+  * Prompt injections
+  * Jailbreaks
+  * Data leakage attempts
+  * Bias, toxicity, and hallucination probes
+
+### Comprehensive Evaluation
+
+* **Rule-based detection** for deterministic checks
+* **LLM-as-judge evaluation** grounded in OWASP standards
+* Structured, explainable verdicts
+
+### OWASP-Mapped Reports
+
+* Risk-specific findings
+* Clear explanations
+* Actionable mitigation guidance
+
+### CI/CD Ready
+
+* Designed for continuous security testing
+* Machine-readable outputs for pipelines and gating
+
+---
+
+## Architecture Overview
+
+The platform is modular, extensible, and secure-by-design.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Test Orchestration Engine                │
+│            (Coordinates all platform components)            │
+└─────────────────────────────────────────────────────────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        │                   │                   │
+        ▼                   ▼                   ▼
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│ Adversarial  │   │ Model        │   │ Evaluators   │
+│ Generators   │──▶│ Adapters     │──▶│ (Rule + LLM) │
+└──────────────┘   └──────────────┘   └──────────────┘
+        │                   │                   │
+        ▼                   ▼                   ▼
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│ OWASP RAG    │   │ Test Results │   │ Report       │
+│ Pipeline     │   │ Store        │   │ Generator    │
+└──────────────┘   └──────────────┘   └──────────────┘
+```
+
+---
+
+## Architecture Principles
+
+1. **Modularity** – Each component is independently testable and replaceable
+2. **Model-Agnostic** – No vendor lock-in
+3. **OWASP-Centric** – Standards-driven evaluation
+4. **Extensible** – New attacks, evaluators, and formats are easy to add
+5. **Secure-by-Design** – The platform itself follows AppSec best practices
+
+---
+
+## Core Components
+
+### 1. Model Adapters (`platform/adapters/`)
+
+Abstract access to LLM providers:
+
+* `BaseAdapter`
+* `OpenAIAdapter`
+* `AnthropicAdapter`
+* `OpenSourceAdapter` (HuggingFace, Ollama, vLLM)
+* `AdapterFactory`
+
+---
+
+### 2. Adversarial Prompt Generators (`platform/generators/`)
+
+OWASP-aligned attack generation:
+
+* `PromptInjectionGenerator` (LLM01)
+* `JailbreakGenerator` (LLM07)
+* `DataLeakageGenerator` (LLM02)
+* `BiasGenerator`
+* `ToxicityGenerator`
+* `HallucinationGenerator`
+* `GeneratorRegistry`
+
+---
+
+### 3. Evaluators (`platform/evaluators/`)
+
+Response assessment and scoring:
+
+* `RuleBasedEvaluator`
+* `LLMJudgeEvaluator`
+* `CompositeEvaluator`
+* `OWASPMappingEvaluator`
+
+---
+
+### 4. Test Orchestration (`platform/orchestrator/`)
+
+Execution control and lifecycle management:
+
+* `TestOrchestrator`
+* `TestSuite`
+* `TestRunner`
+* `TestResult`
+
+---
+
+### 5. Reporting (`platform/reporting/`)
+
+Security and compliance outputs:
+
+* `OWASPReportGenerator`
+* `JSONReportGenerator`
+* `HTMLReportGenerator`
+* `CIReportGenerator`
+
+---
+
+### 6. Configuration (`platform/config/`)
+
+Centralized configuration management:
+
+* `ConfigManager`
+* `ModelConfig`
+* `TestConfig`
+* `EvaluationConfig`
+
+---
+
+## Data Flow
+
+1. Load test suite and model configuration
+2. Generate OWASP-aligned adversarial prompts
+3. Execute prompts against target models
+4. Capture responses
+5. Perform rule-based and LLM-as-judge evaluation
+6. Map findings to OWASP LLM Top 10 risks
+7. Generate explainable security reports
+
+---
+
+## OWASP Risk Coverage
+
+| OWASP Risk                            | Coverage                  |
+| ------------------------------------- | ------------------------- |
+| LLM01 – Prompt Injection              | ✅                         |
+| LLM02 – Sensitive Info Disclosure     | ✅                         |
+| LLM03 – Supply Chain                  | ⚠️ Infrastructure-focused |
+| LLM04 – Data & Model Poisoning        | ⚠️ Dataset-focused        |
+| LLM05 – Improper Output Handling      | ✅                         |
+| LLM06 – Excessive Agency              | 🔜 Planned                |
+| LLM07 – System Prompt Leakage         | ✅                         |
+| LLM08 – Vector & Embedding Weaknesses | ⚠️ RAG-focused            |
+| LLM09 – Misinformation                | ✅                         |
+| LLM10 – Unbounded Consumption         | ⚠️ Resource-focused       |
+
+---
+
+## Security Considerations
+
+* Isolated test execution
+* Rate-limited API access
+* No storage of sensitive prompts or outputs
+* Full audit trail for enterprise use
+* Secure defaults across configurations
+
+---
+
+## Extensibility
+
+The platform is built for community and enterprise extension:
+
+* Custom attack generators
+* Custom evaluators
+* New model adapters
+* New report formats
+* Future plugin system
+
+---
+
+## Roadmap
+
+* Agentic AI risk evaluation
+* Tool and API abuse testing
+* Policy regression testing
+* Compliance report templates (EU AI Act, SOC2)
+
+---
+
+## License
+
+Open-source (license to be finalized).
+
+Contributions, issues, and red-team ideas welcome.
+
 # LLM Red Team Evaluation Platform
 
 LLM Red Team Cybersecurity Evaluation Platform
@@ -224,5 +455,6 @@ Categories are automatically assigned based on risk IDs:
 ## License
 
 This project is for use with the OWASP LLM Top 10 – 2025 document.
+
 
 
