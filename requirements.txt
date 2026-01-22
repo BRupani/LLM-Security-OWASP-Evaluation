@@ -1,0 +1,22 @@
+# Core dependencies for RAG pipeline
+numpy>=1.24.0
+
+# Configuration
+pyyaml>=6.0
+
+# Optional: For actual embeddings (uncomment as needed)
+# sentence-transformers>=2.2.0
+# torch>=2.0.0
+
+# Optional: For vector databases (uncomment as needed)
+# chromadb>=0.4.0
+# faiss-cpu>=1.7.4
+# pinecone-client>=2.2.0
+
+# Optional: For LLM integration (uncomment as needed)
+# openai>=1.0.0
+# anthropic>=0.7.0
+# langchain>=0.1.0
+
+# Development dependencies
+pytest>=7.4.0
